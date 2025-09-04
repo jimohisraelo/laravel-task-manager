@@ -37,25 +37,27 @@ class TaskController extends Controller
     }
 
     public function update(Request $request, Task $task)
-{
-    $request->validate([
-        'title' => 'required',
-        'status' => 'required|in:Pending,Completed',
-    ]);
+    {
+        $request->validate([
+            'title' => 'required',
+            'status' => 'required|in:Pending,Completed',
+        ]);
 
-    $task->update([
-        'title' => $request->title,
-        'description' => $request->description,
-        'status' => $request->status,
-    ]);
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status,
+        ]);
 
-    return redirect()->route('tasks.index')
-                     ->with('success', 'Task updated successfully!');
-}
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task updated successfully!');
+    }
 
     public function destroy(Task $task)
     {
         $task->delete();
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task deleted successfully!');
     }
 }
