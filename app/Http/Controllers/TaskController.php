@@ -36,6 +36,16 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task'));
     }
 
+    public function toggle(Task $task)
+    {
+        $task->status = $task->status === 'Pending' ? 'Completed' : 'Pending';
+        $task->save();
+
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task status updated successfully!');
+    }
+
+
     public function update(Request $request, Task $task)
     {
         $request->validate([
