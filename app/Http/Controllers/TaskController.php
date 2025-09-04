@@ -19,10 +19,17 @@ class TaskController extends Controller
     }
 
     public function store(Request $request)
-    {
-        Task::create($request->all());
-        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
-    }
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'status' => 'required|in:Pending,Completed',
+    ]);
+
+    Task::create($request->all());
+
+    return redirect()->route('tasks.index')
+        ->with('success', 'Task created successfully.');
+}
 
     public function edit(Task $task)
     {
