@@ -24,22 +24,25 @@ The UI is mobile-responsive with rounded borders and clean styling.
    cd task-manager
 
 2. Install dependencies:
+   ```bash
    composer install
    npm install && npm run dev
 
 3. Copy .env file and configure your database:
+   ```bash
    cp .env.example .env
    php artisan key:generate
 
 4. Run migrations:
+   ```bash
    php artisan migrate
    
 5. Start the development server:
+   ```bash
    php artisan serve  
 
 ## 🛠️ Tech Stack
 - Laravel 11
-- Blade Templates (Bootstrap/Tailwind mix)
-- MySQL (or any database supported by Laravel)
-- Pagination for better task browsing
-- Drag-and-drop task reordering (persistent)
+- Blade Templates (Bootstrap)
+- MySQL (Database)
+- JavaScript (for drag-and-drop ordering)
