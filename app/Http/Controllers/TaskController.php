@@ -7,11 +7,21 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::latest()->get();
+        $query = Task::query();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('title', 'LIKE', "%{$search}%")
+                ->orWhere('status', 'LIKE', "%{$search}%");
+        }
+
+        $tasks = $query->orderBy('order', 'asc')->orderBy('created_at', 'desc')->paginate(5);
+
         return view('tasks.index', compact('tasks'));
     }
+
 
     public function create()
     {
@@ -69,5 +79,16 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')
             ->with('success', 'Task deleted successfully!');
+    }
+
+    public function reorder(Request $request)
+    {
+        $orderData = $request->input('order', []);
+
+        foreach ($orderData as $item) {
+            Task::where('id', $item['id'])->update(['order' => $item['position']]);
+        }
+
+        return response()->json(['message' => 'Task order updated successfully.']);
     }
 }

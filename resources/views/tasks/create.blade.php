@@ -36,7 +36,6 @@
             <select name="status" class="form-control">
                 <option value="">-- Select Status --</option>
                 <option value="Pending" {{ old('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
-                <option value="Completed" {{ old('status') == 'Completed' ? 'selected' : '' }}>Completed</option>
             </select>
         </div>
 
